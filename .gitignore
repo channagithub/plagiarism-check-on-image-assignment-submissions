@@ -1,3 +1,10 @@
+# secret keys
+secret_key*
+
+# image files
+*png
+*jpeg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
