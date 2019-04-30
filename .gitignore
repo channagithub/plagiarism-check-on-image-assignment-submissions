@@ -5,6 +5,9 @@ secret_key*
 *png
 *jpeg
 
+# credentials
+plagiarism-check-image-docs-596999b61703.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
