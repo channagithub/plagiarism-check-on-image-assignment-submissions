@@ -9,9 +9,12 @@ from flask import url_for
 from flask import render_template
 from joblib import load
 from werkzeug.utils import secure_filename
-from plagiarism_logic import PlagiarismCheck
+import google.cloud.vision as vision
 import cgi, cgitb, jinja2
 from google.cloud import datastore
+import re
+import heapq
+import io
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "plagiarism-check-image-docs-596999b61703.json"
 
@@ -23,6 +26,18 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.dirname(os.path.abspath(__file__)) + '/temp'
 datastore_client = datastore.Client()
 
+class PlagiarismCheck(object):
+    def __init__(self):
+        self.client = vision.ImageAnnotatorClient()
+
+    def get_text(self, path):
+        with io.open(path, 'rb') as image_file:
+            content = image_file.read()
+        image = vision.types.Image(content=content)
+        resp = self.client.text_detection(image=image)
+        text = ' '.join([d.description for d in resp.text_annotations])
+        print(text)
+        return text
 
 def get_entity(student_name, student_subject, student_submission):
 	print(student_name, student_subject, student_submission)
@@ -31,7 +46,39 @@ def get_entity(student_name, student_subject, student_submission):
 	task['description'] = student_submission
 	return task
 
+def get_plagiarism_report(current_three_gram, query, top_n = 5):
+	heap = []
+	n = len(current_three_gram)
+	ret_report = {}
+	if n:
+		# loop through all students
+		for a in query.fetch(): 
 
+			other_student_name = a.key.name
+			other_student_submission = a['description']
+
+			match_count = 0
+
+			# loop through each gram of current submission and check how many match
+			for a_gram in current_three_gram:
+				if a_gram in other_student_submission:
+					match_count += 1
+
+			# calculate percentage plagiarism
+			plagiarism_val = (n / match_count) * 100 if match_count else 0
+
+			# add to heap for top 5
+			heapq.heappush(heap, (plagiarism_val, other_student_name))
+
+	ret_report = dict([(k, v) for v, k in heapq.nlargest(top_n, heap)])
+
+	return ret_report
+
+def get_three_gram(img_text):
+	shingleLength = 3
+	tokens = re.findall(r"[\w']+", img_text)
+	three_gram = ['_'.join(tokens[i:i+shingleLength]) for i in range(len(tokens) - shingleLength + 1)]
+	return three_gram
 
 @app.route('/uploader', methods = ['POST'])
 def upload_file():
@@ -65,10 +112,16 @@ def upload_file():
 
 		obj = PlagiarismCheck()
 		img_text = obj.get_text(upload_folder)
+		# convert to ascii
+		img_text = str(img_text.encode('ascii', 'ignore'))
+		three_gram = get_three_gram(img_text)
 
-		datastore_client.put(get_entity(str(student_name), str(subject_name), str(img_text.encode('ascii', 'ignore'))))
+		query = datastore_client.query(kind='DDS')
+		plagiarism_report = get_plagiarism_report(three_gram, query)
+		
+		datastore_client.put(get_entity(str(student_name), str(subject_name), three_gram))
 
-	return jsonify(return_value = img_text)
+	return jsonify(return_value = plagiarism_report)
 
 @app.route('/is-alive', methods=['GET'])
 def index():
