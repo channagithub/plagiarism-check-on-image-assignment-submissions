@@ -6,6 +6,7 @@ from flask import request
 from flask import jsonify
 from flask import redirect
 from flask import url_for
+from flask import render_template
 from joblib import load
 from werkzeug.utils import secure_filename
 from plagiarism_logic import PlagiarismCheck
@@ -60,6 +61,10 @@ def upload_file():
 @app.route('/is-alive', methods=['GET'])
 def index():
     return jsonify(return_value = "channa works on GCC project")
+
+@app.route('/', methods=['GET', 'POST'])
+def index_():
+    return render_template('index.html')
 
 if __name__ == "__main__":
     print("Loading!")
