@@ -64,11 +64,10 @@
   <div class="container">
     <center><h1>Plagiarism check on Image Docs..!!</h1></center>
     <br/>
-    <form action="http://localhost:5000/uploader" method="post">
-        <!-- subject name -->
+    <form action="http://localhost:5000/uploader" method="post" enctype="multipart/form-data">
         <center>
 
-          <label >Please choose Subject:</label> 
+         <label >Please choose Subject:</label> 
             <select style="max-width:19%; max-height=13%;"  id="subject-name" name="subject-name" required>
               <option value="Cloud">Cloud</option>
               <option value="SML">SML</option>
@@ -78,12 +77,11 @@
             </select>
         </center>
 
-        <!-- student name -->
-         <center> <label >Please enter Student name:</label> 
+              <center> <label >Please enter Student name:</label> 
         <input type="text" name="student-name" required> </center>
 
-        <!-- assignment -->
-        <center> <b> <input type="file" class="form-control-file" id="assignment-file-id" name="assignment-file" required> </b> </center> <br/>
+ 
+        <center> <b> <input type="file" class="form-control-file" id="assignment-file" name="assignment-file" required> </b> </center> <br/>
 
         <center> <input class="btn btn-primary btn-md active" type="submit"> </center> 
       </form>
