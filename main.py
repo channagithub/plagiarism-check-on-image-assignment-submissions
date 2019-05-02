@@ -16,7 +16,7 @@ import re
 import heapq
 import io
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/matchtheimages/key.json" #"plagiarism-check-image-docs-596999b61703.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "plagiarism-check-image-docs-596999b61703.json"
 
 # UPLOAD_FOLDER = '/Users/channa/Projects/plagiarism-check-on-image-docs/uploaded_imgs'
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -112,6 +112,10 @@ def uploader():
 
 		obj = PlagiarismCheck()
 		img_text = obj.get_text(upload_folder)
+
+		# remove the file
+		os.remove(upload_folder)
+		
 		# convert to ascii
 		img_text = str(img_text.encode('ascii', 'ignore'))
 		three_gram = get_three_gram(img_text)
