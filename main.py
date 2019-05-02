@@ -16,7 +16,7 @@ import re
 import heapq
 import io
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "plagiarism-check-image-docs-596999b61703.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/matchtheimages/key.json" #"plagiarism-check-image-docs-596999b61703.json"
 
 # UPLOAD_FOLDER = '/Users/channa/Projects/plagiarism-check-on-image-docs/uploaded_imgs'
 # ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -80,7 +80,7 @@ def get_three_gram(img_text):
 	return three_gram
 
 @app.route('/uploader', methods = ['POST'])
-def upload_file():
+def uploader():
 
 	if request.method == 'POST':
 
