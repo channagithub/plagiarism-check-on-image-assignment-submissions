@@ -9,12 +9,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <style type="text/css" media="screen">
     body{
-      background-image: url('image.jpeg');
+      background-image: url("https://i.ytimg.com/vi/TKZ9fD0SILc/maxresdefault_live.jpg");
       background-repeat:no-repeat;
-      -webkit-background-size: 100% auto;
-      -moz-background-size: 100% auto;
-      -o-background-size: 100% auto;
-      background-size: 100% auto ;
+      -webkit-background-size: 110% auto;
+      -moz-background-size: 110% auto;
+      -o-background-size: 110% auto;
+      background-size: 110% auto ;
     }
     .container {
       height: 400px;
@@ -62,12 +62,12 @@
     width: 20% ;
   }
   </style> 
+  <center>
+  <img src="https://brandguide.asu.edu/sites/default/files/resize/styles/panopoly_image_original/public/asu_arizona_state_university_logo_vert_rgb_maroongold-175x141.png?itok=F5IzfqZv">
+</center>
 </head>
 <body  >
 
-  <div class="container">
-    <center><h1>Plagiarism check on Image Docs</h1></center>
-    <br/>
     <form action="uploader" method="post" enctype="multipart/form-data">
         <center>
 
@@ -80,10 +80,10 @@
               <option value="MC">MC</option>
             </select>
         </center>
-
+            <br>
               <center> <label >Please enter Student name:</label> 
         <input type="text" name="student-name" required> </center>
-
+            <br>
  
         <center> <b> <input type="file" class="form-control-file" id="assignment-file" name="assignment-file" required> </b> </center> <br/>
 
@@ -96,7 +96,6 @@
               {% if student_name %} <label > {{ student_name }}</label> {% endif %}  <br />
               {% if subject_name %} <label> {{ subject_name }}</label> {% endif %}  <br />
               
-              <br/>
 
               {% if result1 %}
               <table>
@@ -142,11 +141,9 @@
 
               </table>
               {% endif %}
-
-          </center>
         </div>
 
-   
+   </center>
 
     <div style="position: relative">
       <p>
