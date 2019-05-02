@@ -36,11 +36,11 @@ class PlagiarismCheck(object):
         image = vision.types.Image(content=content)
         resp = self.client.text_detection(image=image)
         text = ' '.join([d.description for d in resp.text_annotations])
-        print(text)
+        #print(text)
         return text
 
 def get_entity(student_name, student_subject, student_submission):
-	print(student_name, student_subject, student_submission)
+	# print(student_name, student_subject, student_submission)
 	task_key = datastore_client.key(student_subject, student_name)
 	task = datastore.Entity(key=task_key)
 	task['description'] = student_submission
@@ -65,7 +65,7 @@ def get_plagiarism_report(current_three_gram, query, top_n = 5):
 					match_count += 1
 
 			# calculate percentage plagiarism
-			plagiarism_val = (float(n) / match_count) * 100 if match_count else 0
+			plagiarism_val = round((float(match_count) / n) * 100, 2) if match_count else 0
 
 			# add to heap for top 5
 			heapq.heappush(heap, (plagiarism_val, other_student_name))
@@ -74,7 +74,7 @@ def get_plagiarism_report(current_three_gram, query, top_n = 5):
 	return ret_report
 
 def get_three_gram(img_text):
-	shingleLength = 3
+	shingleLength = 2
 	tokens = re.findall(r"[\w']+", img_text)
 	three_gram = ['_'.join(tokens[i:i+shingleLength]) for i in range(len(tokens) - shingleLength + 1)]
 	return three_gram
