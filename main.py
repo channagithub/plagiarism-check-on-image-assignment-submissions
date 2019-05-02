@@ -65,13 +65,12 @@ def get_plagiarism_report(current_three_gram, query, top_n = 5):
 					match_count += 1
 
 			# calculate percentage plagiarism
-			plagiarism_val = (n / match_count) * 100 if match_count else 0
+			plagiarism_val = (float(n) / match_count) * 100 if match_count else 0
 
 			# add to heap for top 5
 			heapq.heappush(heap, (plagiarism_val, other_student_name))
 
 	ret_report = dict([(k, v) for v, k in heapq.nlargest(top_n, heap)])
-
 	return ret_report
 
 def get_three_gram(img_text):
@@ -100,6 +99,7 @@ def upload_file():
 			print('No file part')
 			return redirect(request.url)
 		file = request.files['assignment-file']
+
 		# if user does not select file, browser also
 		# submit a empty part without filename
 		if file.filename == '':
@@ -116,12 +116,19 @@ def upload_file():
 		img_text = str(img_text.encode('ascii', 'ignore'))
 		three_gram = get_three_gram(img_text)
 
-		query = datastore_client.query(kind='DDS')
+		# query exisiting entities for the given subject
+		query = datastore_client.query(kind=subject_name)
 		plagiarism_report = get_plagiarism_report(three_gram, query)
 		
+		# add this submission to database
 		datastore_client.put(get_entity(str(student_name), str(subject_name), three_gram))
 
-	return jsonify(return_value = plagiarism_report)
+		ret_val = {
+		"subject_name": subject_name,
+		"plagiarism_report": plagiarism_report
+		}
+
+	return jsonify(return_value = ret_val)
 
 @app.route('/is-alive', methods=['GET'])
 def index():
