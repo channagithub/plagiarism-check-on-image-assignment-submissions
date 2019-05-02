@@ -132,19 +132,24 @@ def uploader():
 		"plagiarism_report": plagiarism_report
 		}
 		result = [""]*5
+		percentage = [None]*5
 		i=0
 		for key, val in plagiarism_report.items():
 			if val>0:
-				result[i]+=str(key)+": " +str(val) 
+				result[i]=str(key)
+				percentage[i]=str(val)
 				i+=1
 		
 
 
 
 	return render_template('index.html', student_name= "Student Name: " + student_name, 
-								subject_name = "Subject Name: " +subject_name, dotted_lines="-"*45, 
-								result1=result[0],result2=result[1],result3=result[2],result4=result[3], 
-								result5=result[4])#jsonify(return_value = ret_val)
+								subject_name = "Subject Name: " +subject_name,  
+								result1=result[0],result2=result[1],result3=result[2],result4=result[3], result5=result[4],
+								percentage1=percentage[0],percentage2=percentage[1],percentage3=percentage[2]
+								,percentage4=percentage[3],percentage5=percentage[4])
+
+								#jsonify(return_value = ret_val)
 
 @app.route('/is-alive', methods=['GET'])
 def index():

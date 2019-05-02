@@ -51,6 +51,16 @@
       box-shadow: 1px #666;
       transform: translateY(4px);
     }
+    table, th {
+    border: 1px solid black;
+
+
+  }
+  td {
+    border: 1px solid black;
+    text-align: "center";
+    width: 20% ;
+  }
   </style> 
 </head>
 <body  >
@@ -81,20 +91,60 @@
         <br/>
       </form>
       <br/>
-            <div>
+       
             <center> 
               {% if student_name %} <label > {{ student_name }}</label> {% endif %}  <br />
               {% if subject_name %} <label> {{ subject_name }}</label> {% endif %}  <br />
-               {% if dotted_lines %} <label> {{ dotted_lines }}</label> {% endif %}  <br />
+              
+              <br/>
 
-                      {% if result1 %} <label style="font-size: 14px" > {{ result1 }}</label> {% endif %}  <br />
-                      {% if result2 %} <label style="font-size: 14px" > {{ result2 }}</label> {% endif %}  <br />
-                      {% if result3 %} <label style="font-size: 14px" > {{ result3 }}</label> {% endif %}  <br />
-                      {% if result4 %} <label style="font-size: 14px" > {{ result4 }}</label> {% endif %}  <br />
-                      {% if result5 %} <label style="font-size: 14px" > {{ result5 }}</label> {% endif %}  <br />
-                  </center></div>
-</center>
-    </div>
+              {% if result1 %}
+              <table>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Plagiarism %</th>
+                </tr>
+
+                {% if result1 %}
+                <tr>
+                  <td>{{result1}}</td>
+                  <td>{{percentage1}}</td>
+                </tr>
+                {% endif %}
+
+                {% if result2 %}
+                <tr>
+                  <td>{{result2}}</td>
+                  <td>{{percentage2}}</td>
+                </tr>
+                {% endif %}
+
+                {% if result3 %}
+                <tr>
+                  <td>{{result3}}</td>
+                  <td>{{percentage3}}</td>
+                </tr>
+                {% endif %}
+
+                {% if result4 %}
+                <tr>
+                  <td>{{result4}}</td>
+                  <td>{{percentage4}}</td>
+                </tr>
+                {% endif %}
+
+                {% if result5 %}
+                <tr>
+                  <td>{{result5}}</td>
+                  <td>{{percentage5}}</td>
+                </tr>
+                {% endif %}
+
+              </table>
+              {% endif %}
+
+          </center>
+        </div>
 
    
 
