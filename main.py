@@ -127,8 +127,20 @@ def uploader():
 		"subject_name": subject_name,
 		"plagiarism_report": plagiarism_report
 		}
+		result = [""]*5
+		i=0
+		for key, val in plagiarism_report.items():
+			if val>0:
+				result[i]+=str(key)+": " +str(val) 
+				i+=1
+		
 
-	return jsonify(return_value = ret_val)
+
+
+	return render_template('index.html', student_name= "Student Name: " + student_name, 
+								subject_name = "Subject Name: " +subject_name, dotted_lines="-"*45, 
+								result1=result[0],result2=result[1],result3=result[2],result4=result[3], 
+								result5=result[4])#jsonify(return_value = ret_val)
 
 @app.route('/is-alive', methods=['GET'])
 def index():

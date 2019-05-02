@@ -20,7 +20,6 @@
       height: 400px;
       width: 1200px;
       font-family: 'Bitter';
-
     }
     p{
       color:black;
@@ -30,12 +29,12 @@
       width:100%; 
       text-align: center;
     }
+
     label{
       font-family: 'Bitter';
       font-size:18px;
     }
  
-
     .btn {
       display: inline-block;
       border: none;
@@ -46,23 +45,18 @@
       display: inline-block;
       font-size: 16px;
     }
-
     .button:hover {background-color: #FFFFFF}
-
     .button:active {
       background-color: #FFFFFF;
       box-shadow: 1px #666;
       transform: translateY(4px);
     }
-
-
-
   </style> 
 </head>
 <body  >
 
   <div class="container">
-    <center><h1>Plagiarism check on Image Docs..!!</h1></center>
+    <center><h1>Plagiarism check on Image Docs</h1></center>
     <br/>
     <form action="uploader" method="post" enctype="multipart/form-data">
         <center>
@@ -84,9 +78,25 @@
         <center> <b> <input type="file" class="form-control-file" id="assignment-file" name="assignment-file" required> </b> </center> <br/>
 
         <center> <input class="btn btn-primary btn-md active" type="submit"> </center> 
+        <br/>
       </form>
+      <br/>
+            <div>
+            <center> 
+              {% if student_name %} <label > {{ student_name }}</label> {% endif %}  <br />
+              {% if subject_name %} <label> {{ subject_name }}</label> {% endif %}  <br />
+               {% if dotted_lines %} <label> {{ dotted_lines }}</label> {% endif %}  <br />
+
+                      {% if result1 %} <label style="font-size: 14px" > {{ result1 }}</label> {% endif %}  <br />
+                      {% if result2 %} <label style="font-size: 14px" > {{ result2 }}</label> {% endif %}  <br />
+                      {% if result3 %} <label style="font-size: 14px" > {{ result3 }}</label> {% endif %}  <br />
+                      {% if result4 %} <label style="font-size: 14px" > {{ result4 }}</label> {% endif %}  <br />
+                      {% if result5 %} <label style="font-size: 14px" > {{ result5 }}</label> {% endif %}  <br />
+                  </center></div>
+</center>
     </div>
 
+   
 
     <div style="position: relative">
       <p>
